@@ -17,6 +17,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.etsy.android.grid.StaggeredGridView;
 import com.knightweng.android.takemehome.R;
 import com.knightweng.android.takemehome.common.QueryParams;
 import com.knightweng.android.takemehome.domain.dto.PhotoItem;
@@ -39,7 +40,7 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
 
     private PhotoListAdapter               mPhotoListAdapter;
 
-    private GridView                       mGridView;
+    private StaggeredGridView                       mGridView;
 
     private RelativeLayout                 mProgressView;
 
@@ -169,7 +170,7 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
     }
 
     private void findViews(View view) {
-        mGridView = (GridView) view.findViewById(R.id.grid_view);
+        mGridView = (StaggeredGridView) view.findViewById(R.id.grid_view);
         mProgressView = (RelativeLayout) view.findViewById(R.id.rl_progress);
     }
 
@@ -235,8 +236,9 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
 
     @Override
     public void onItemClicked(View v, PhotoItem photoItem) {
-        if (presenter != null && photoItem != null) {
+        /*if (presenter != null && photoItem != null) {
             presenter.onItemClicked(photoItem);
-        }
+        }*/
+        Log.d("PhotoItem", photoItem.mId + " " + photoItem.mFrom + " " + photoItem.mImages + " " + photoItem.mCoverPhoto + " " + photoItem.mVideoPreviewPic);
     }
 }

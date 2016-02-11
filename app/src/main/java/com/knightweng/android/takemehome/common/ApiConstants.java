@@ -30,8 +30,7 @@ public class ApiConstants {
 
     private static String getAlbumUrl(int pageSize) {
         AccessToken.getCurrentAccessToken().getToken();
-        return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&limits=" + pageSize
-                + "&access_token=" + AccessToken.getCurrentAccessToken().getToken();
+        return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&access_token=" + AccessToken.getCurrentAccessToken().getToken();
     }
 
     public static String getCoverPhotoUrl(String id) {

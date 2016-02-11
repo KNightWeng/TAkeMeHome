@@ -1,5 +1,7 @@
 package com.knightweng.android.takemehome.domain.dto;
 
+import android.util.Log;
+
 import com.knightweng.android.takemehome.common.ApiConstants;
 
 import org.json.JSONArray;

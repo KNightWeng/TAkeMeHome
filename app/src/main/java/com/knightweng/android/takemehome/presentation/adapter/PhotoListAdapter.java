@@ -10,12 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.knightweng.android.takemehome.R;
 import com.knightweng.android.takemehome.common.ApiConstants;
 import com.knightweng.android.takemehome.domain.dto.PhotoItem;
+import com.knightweng.android.takemehome.presentation.view.CircularNetworkImageView;
 import com.knightweng.android.takemehome.utils.VolleyLib;
+
+import org.w3c.dom.Text;
 
 public class PhotoListAdapter extends BaseAdapter {
 
@@ -92,11 +96,8 @@ public class PhotoListAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.photo_row_item, null);
         }
-        /*SquaredImageView view = (SquaredImageView) convertView;
-        if (view == null) {
-            view = new SquaredImageView(mContext);
-            view.setScaleType(CENTER_CROP);
-        }*/
+
+
 
         if (convertView.getTag() == null) {
             resultViewHolder = new ViewHolder();
@@ -120,10 +121,10 @@ public class PhotoListAdapter extends BaseAdapter {
 
     public static class ViewHolder {
 
-        NetworkImageView mPhoto;
+        CircularNetworkImageView mPhoto;
 
         public void instantiate(View view) {
-            mPhoto = (NetworkImageView) view.findViewById(R.id.iv_image);
+            mPhoto = (CircularNetworkImageView) view.findViewById(R.id.iv_image);
         }
 
         public void bindViews(PhotoItem item) {
