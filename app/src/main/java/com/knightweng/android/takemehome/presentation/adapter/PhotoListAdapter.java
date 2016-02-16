@@ -97,8 +97,6 @@ public class PhotoListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.photo_row_item, null);
         }
 
-
-
         if (convertView.getTag() == null) {
             resultViewHolder = new ViewHolder();
             resultViewHolder.instantiate(convertView);
@@ -121,10 +119,10 @@ public class PhotoListAdapter extends BaseAdapter {
 
     public static class ViewHolder {
 
-        CircularNetworkImageView mPhoto;
+        NetworkImageView mPhoto;
 
         public void instantiate(View view) {
-            mPhoto = (CircularNetworkImageView) view.findViewById(R.id.iv_image);
+            mPhoto = (NetworkImageView) view.findViewById(R.id.iv_image);
         }
 
         public void bindViews(PhotoItem item) {

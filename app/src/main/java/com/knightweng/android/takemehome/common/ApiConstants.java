@@ -16,6 +16,11 @@ public class ApiConstants {
         String VIDEO_PREVIEW = "picture";
     }
 
+    public interface Page {
+        String CURSORS       = "cursors";
+        String AFTER         = "after";
+    }
+
     public static String getPhotoUrl() {
         return getPhotoUrl(5);
     }
@@ -26,11 +31,16 @@ public class ApiConstants {
                 + AccessToken.getCurrentAccessToken().getToken();
     }
 
-    public static String getAlbumUrl() { return getAlbumUrl(100); }
+    public static String getAlbumUrl() { return getAlbumUrl(50); }
 
     private static String getAlbumUrl(int pageSize) {
         AccessToken.getCurrentAccessToken().getToken();
-        return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&access_token=" + AccessToken.getCurrentAccessToken().getToken();
+        return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&limit=" + pageSize + "&access_token=" + AccessToken.getCurrentAccessToken().getToken();
+    }
+
+    public static String getAlbumNextPageUrl(String hashCode) {
+        AccessToken.getCurrentAccessToken().getToken();
+        return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&limit=50&after=" + hashCode + "&access_token=" + AccessToken.getCurrentAccessToken().getToken();
     }
 
     public static String getCoverPhotoUrl(String id) {
