@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="androidparallax-1.0.1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.florent37/androidparallax/1.0.1/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.florent37/androidparallax/1.0.1/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Downloads/caches/modules-2/files-2.1/com.github.florent37/androidparallax/1.0.1/e87cadc04f51c9f7e2d02df95f17422356b78d5/androidparallax-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

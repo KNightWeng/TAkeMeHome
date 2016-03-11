@@ -5,7 +5,7 @@ import java.util.Locale;
 import android.util.Log;
 
 public class LogUtils {
-    private static final String LOG_PREFIX = "[PhotoStream]";
+    private static final String LOG_PREFIX = "[TAkeMeHome]";
 
     public static void verboseLog(String tag, String message) {
         verboseLog(tag, message, null);

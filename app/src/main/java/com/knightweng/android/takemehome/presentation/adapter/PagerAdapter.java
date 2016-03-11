@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.knightweng.android.takemehome.presentation.fragment.PhotoListFragment;
+import com.knightweng.android.takemehome.presentation.fragment.AlbumListFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
@@ -18,11 +18,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
         case 0:
-            return PhotoListFragment.newInstance(PhotoListFragment.getItemBundle("photo"));
+            return AlbumListFragment.newInstance(AlbumListFragment.getItemBundle("photo"));
         case 1:
-            return PhotoListFragment.newInstance(PhotoListFragment.getItemBundle("album"));
+            return AlbumListFragment.newInstance(AlbumListFragment.getItemBundle("album"));
         case 2:
-            return PhotoListFragment.newInstance(PhotoListFragment.getItemBundle("video"));
+            return AlbumListFragment.newInstance(AlbumListFragment.getItemBundle("video"));
         }
         return null;
     }

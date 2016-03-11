@@ -28,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
     public abstract String getFragmentTag();
 
     /*
-     * Use this method instead of getActivity() if needed Otherwise, always use
+     * Use this method instead of getmActivityActivity() if needed Otherwise, always use
      * mActivity
      */
     public BaseActivity getmActivity() {

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -18,17 +17,15 @@ import com.knightweng.android.takemehome.R;
 import com.knightweng.android.takemehome.common.ApiConstants;
 import com.knightweng.android.takemehome.domain.dto.PhotoItem;
 import com.knightweng.android.takemehome.presentation.view.CircularNetworkImageView;
-import com.knightweng.android.takemehome.utils.LogUtils;
 import com.knightweng.android.takemehome.utils.VolleyLib;
-import com.squareup.picasso.Picasso;
 
-public class PhotoListAdapter extends BaseAdapter {
+public class AlbumListAdapter extends BaseAdapter {
 
     private final Context mContext;
 
     private final LayoutInflater mLayoutInflater;
 
-    private List<PhotoItem>      mPhotos;
+    private List<PhotoItem>      mAlbums;
 
     private OnItemClickListener  mOnItemClickListener;
 
@@ -36,11 +33,11 @@ public class PhotoListAdapter extends BaseAdapter {
         void onItemClicked(View anchor, PhotoItem photoItem);
     }
 
-    public PhotoListAdapter(Context context, Collection<PhotoItem> collection) {
+    public AlbumListAdapter(Context context, Collection<PhotoItem> collection) {
         mContext = context;
         validateCollection(collection);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPhotos = new ArrayList<>(collection);
+        mAlbums = new ArrayList<>(collection);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -55,7 +52,7 @@ public class PhotoListAdapter extends BaseAdapter {
 
     public void setCollection(Collection<PhotoItem> photoItems) {
         validateUsersCollection(photoItems);
-        mPhotos = new ArrayList<>(photoItems);
+        mAlbums = new ArrayList<>(photoItems);
         notifyDataSetChanged();
     }
 
@@ -67,28 +64,28 @@ public class PhotoListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (mPhotos == null)
+        if (mAlbums == null)
             return 0;
-        return mPhotos.size();
+        return mAlbums.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (mPhotos == null)
+        if (mAlbums == null)
             return null;
-        return mPhotos.get(position);
+        return mAlbums.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        if (mPhotos == null)
+        if (mAlbums == null)
             return 0;
-        return Long.parseLong(mPhotos.get(position).mId);
+        return Long.parseLong(mAlbums.get(position).mId);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LogUtils.debugLog("PhotoListAdapter", "getView()");
+        Log.d("AlbumListAdapter", "AlbumListAdapter:getView");
         final PhotoItem result = (PhotoItem) getItem(position);
 
         ViewHolder resultViewHolder;

@@ -1,13 +1,17 @@
 package com.knightweng.android.takemehome.presentation.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.knightweng.android.takemehome.utils.LogUtils;
 
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "BASE_ACTIVITY";
 
@@ -16,7 +20,6 @@ public abstract class BaseActivity extends ActionBarActivity {
         super.setContentView(layoutResID);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("PhotoStream");
     }
 
     @Override

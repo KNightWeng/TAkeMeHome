@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "com.knightweng.android.takemehome"
@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
 }
 
 dependencies {
@@ -27,5 +30,11 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.etsy.android.grid:library:1.0.5'
+    compile 'com.github.kanytu:android-parallax-listview:v1.1'
+    compile 'com.fmsirvent:parallaxeverywhere:1.0.4'
+    compile ('com.github.florent37:androidparallax:1.0.1@aar'){
+        transitive=true
+    }
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile files('libs/volley.jar')
 }

@@ -64,7 +64,7 @@ public class RequestUtils extends ApiUtils {
             PhotosResponse response = getAlbumByPage(context, url);
             photoItemList.addAll(response.getResult());
 
-            url = ApiConstants.getAlbumNextPageUrl(response.getNextPagingHashCode());
+            url = ApiConstants.getNextPageAlbumUrl(response.getNextPagingHashCode());
             nextPage = response.getNextPaging();
 
             LogUtils.debugLog(LOG_TAG, "url = " + url + " nextPage = " + nextPage );

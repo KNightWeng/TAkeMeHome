@@ -38,12 +38,12 @@ public class ApiConstants {
         return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&limit=" + pageSize + "&access_token=" + AccessToken.getCurrentAccessToken().getToken();
     }
 
-    public static String getAlbumNextPageUrl(String hashCode) {
+    public static String getNextPageAlbumUrl(String hashCode) {
         AccessToken.getCurrentAccessToken().getToken();
         return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&limit=50&after=" + hashCode + "&access_token=" + AccessToken.getCurrentAccessToken().getToken();
     }
 
-    public static String getCoverPhotoUrl(String id) {
+    public static String getAlbumCoverPhotoUrl(String id) {
         AccessToken.getCurrentAccessToken().getToken();
         return "https://graph.facebook.com/v2.3/" + id + "/picture?access_token="
                 + AccessToken.getCurrentAccessToken().getToken();

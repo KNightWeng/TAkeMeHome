@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhotoStream</string>
+    <string name="app_name">TAkeMeHome</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>

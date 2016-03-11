@@ -100,6 +100,7 @@ public class HomeActivity extends BaseActivity implements FacebookCallback<Login
         } else {
             getFragmentManager().popBackStack();
         }
+
     }
 
     private void navigateToFragment() {

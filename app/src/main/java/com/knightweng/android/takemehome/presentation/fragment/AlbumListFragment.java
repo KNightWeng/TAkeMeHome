@@ -1,10 +1,12 @@
 package com.knightweng.android.takemehome.presentation.fragment;
 
+import java.security.spec.AlgorithmParameterSpec;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,15 +24,17 @@ import com.knightweng.android.takemehome.R;
 import com.knightweng.android.takemehome.common.QueryParams;
 import com.knightweng.android.takemehome.domain.dto.PhotoItem;
 import com.knightweng.android.takemehome.domain.usecase.UseCaseFactory;
-import com.knightweng.android.takemehome.presentation.adapter.PhotoListAdapter;
+import com.knightweng.android.takemehome.presentation.activity.HomeActivity;
+import com.knightweng.android.takemehome.presentation.activity.PhotoParallaxActivity;
+import com.knightweng.android.takemehome.presentation.adapter.AlbumListAdapter;
 import com.knightweng.android.takemehome.presentation.presenter.ItemPresenter;
 import com.knightweng.android.takemehome.presentation.view.CollectionView;
 import com.knightweng.android.takemehome.utils.LogUtils;
 
-public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem>> implements
-        CollectionView<PhotoItem>, PhotoListAdapter.OnItemClickListener {
+public class AlbumListFragment extends PresenterFragment<ItemPresenter<PhotoItem>> implements
+        CollectionView<PhotoItem>, AlbumListAdapter.OnItemClickListener {
 
-    private static final String            FRAGMENT_TAG       = PhotoListFragment.class.getName();
+    private static final String            FRAGMENT_TAG       = AlbumListFragment.class.getName();
 
     private static final String            LOG_TAG            = "PHOTO_LIST_FRAGMENT";
 
@@ -38,7 +42,7 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
 
     private int                            mScrollPosition    = 0;
 
-    private PhotoListAdapter               mPhotoListAdapter;
+    private AlbumListAdapter               mAlbumListAdapter;
 
     private StaggeredGridView                       mGridView;
 
@@ -53,7 +57,7 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
     /**
      * Should not be called from outside this fragment.
      */
-    public PhotoListFragment() {
+    public AlbumListFragment() {
     }
 
     public static Bundle getItemBundle(String query) {
@@ -62,8 +66,8 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
         return bundle;
     }
 
-    public static PhotoListFragment newInstance(Bundle bundle) {
-        PhotoListFragment fragment = new PhotoListFragment();
+    public static AlbumListFragment newInstance(Bundle bundle) {
+        AlbumListFragment fragment = new AlbumListFragment();
         if (bundle != null) {
             fragment.mQuery = bundle.getString("query", "photo");
             fragment.setFragmentTagSuffix(fragment.mQuery);
@@ -175,8 +179,9 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
     }
 
     private void bindViews() {
-        mPhotoListAdapter = new PhotoListAdapter(mActivity, new ArrayList<PhotoItem>());
-        mGridView.setAdapter(mPhotoListAdapter);
+        Log.d("AlbumListFragment", "bindViews");
+        mAlbumListAdapter = new AlbumListAdapter(mActivity, new ArrayList<PhotoItem>());
+        mGridView.setAdapter(mAlbumListAdapter);
     }
 
     @Override
@@ -187,10 +192,10 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
 
     @Override
     public void renderCollection(Collection<PhotoItem> photoItems) {
-        if (photoItems != null && mPhotoListAdapter != null) {
-            mPhotoListAdapter.setCollection(photoItems);
-            mPhotoListAdapter.notifyDataSetChanged();
-            mPhotoListAdapter.setOnItemClickListener(this);
+        if (photoItems != null && mAlbumListAdapter != null) {
+            mAlbumListAdapter.setCollection(photoItems);
+            mAlbumListAdapter.notifyDataSetChanged();
+            mAlbumListAdapter.setOnItemClickListener(this);
         }
     }
 
@@ -217,7 +222,7 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
 
     @Override
     public void showRetry() {
-        mPhotoListAdapter.setCollection(new ArrayList<PhotoItem>());
+        mAlbumListAdapter.setCollection(new ArrayList<PhotoItem>());
     }
 
     @Override
@@ -239,6 +244,11 @@ public class PhotoListFragment extends PresenterFragment<ItemPresenter<PhotoItem
         /*if (presenter != null && photoItem != null) {
             presenter.onItemClicked(photoItem);
         }*/
-        Log.d("PhotoItem", photoItem.mId + " " + photoItem.mFrom + " " + photoItem.mImages + " " + photoItem.mCoverPhoto + " " + photoItem.mVideoPreviewPic);
+        Log.d("PhotoItem", photoItem.mCoverPhoto);
+
+        Intent intent = new Intent();
+        intent.putExtra("PhotoItem", photoItem.mCoverPhoto);
+        intent.setClass(getActivity(), PhotoParallaxActivity.class);
+        startActivity(intent);
     }
 }
