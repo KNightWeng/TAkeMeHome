@@ -10,7 +10,8 @@ public interface ContentRepository<T> {
      *
      * @return List<T>
      */
-    List<T> getPhotos();
+    //List<T> getPhotos();
+    List<T> getAlbumPhotos(String id);
 
     List<T> getAlbums();
 

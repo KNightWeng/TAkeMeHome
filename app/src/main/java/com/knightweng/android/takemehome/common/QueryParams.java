@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class QueryParams extends HashMap {
 
     enum QueryKeys {
-        ID, TEXT
+        ID, TEXT, DATA
     }
 
     private QueryParams() {
@@ -32,6 +32,15 @@ public class QueryParams extends HashMap {
 
     public String getTEXT() {
         return (String) get(QueryKeys.TEXT);
+    }
+
+    public QueryParams setData(String data) {
+        put(QueryKeys.DATA, data);
+        return this;
+    }
+
+    public String getData() {
+        return (String) get(QueryKeys.DATA);
     }
 
 }

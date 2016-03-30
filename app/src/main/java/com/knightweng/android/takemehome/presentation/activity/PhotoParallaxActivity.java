@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.etsy.android.grid.StaggeredGridView;
@@ -33,6 +34,7 @@ import com.knightweng.android.takemehome.presentation.adapter.AlbumListAdapter;
 import com.knightweng.android.takemehome.presentation.adapter.PhotoListAdapter;
 import com.knightweng.android.takemehome.presentation.fragment.PresenterFragment;
 import com.knightweng.android.takemehome.presentation.presenter.ItemPresenter;
+import com.knightweng.android.takemehome.presentation.slidepager.SlidePagerActivity;
 import com.knightweng.android.takemehome.presentation.view.BaseView;
 import com.knightweng.android.takemehome.presentation.view.CollectionView;
 import com.knightweng.android.takemehome.utils.LogUtils;
@@ -75,14 +77,14 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
 
     private InteractionListener<PhotoItem> mListener;
 
-    private String                         mCoverPhoto;
+    private PhotoItem                      mPhotoItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         LogUtils.debugLog(LOG_TAG, " onCreate()");
 
         Intent intent = getIntent();
-        mCoverPhoto = intent.getStringExtra("PhotoItem");
+        mPhotoItem = (PhotoItem) intent.getSerializableExtra("PhotoItem");
 
         super.onCreate(savedInstanceState);
         //try {
@@ -97,15 +99,29 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
 
         mContainer.removeAllViews();
 
-        //NetworkImageView mNetworkImageView = new NetworkImageView(this);
-        //Picasso.with(getContext()).load(ApiConstants.getCoverPhotoUrl(mCoverPhoto)).into(mNetworkImageView);
-        //mContainer.addView(mNetworkImageView);
+        final View v2 = getLayoutInflater().inflate(R.layout.album_view_header, mParallaxGridView, true);
+        ImageView mImageView = (ImageView) v2.findViewById(R.id.album_view_header_imageview);
+        Picasso.with(getContext())
+                .load(ApiConstants.getAlbumCoverPhotoUrl(mPhotoItem.mCoverPhoto))
+                .into(mImageView, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("Parallax", "onSuccess");
+                        if(mPhotoListAdapter != null)
+                            mPhotoListAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError() {
+                        Toast.makeText(getContext(), "Load Header image error !!", Toast.LENGTH_LONG);
+                    }
+                });
 
         final View v = getLayoutInflater().inflate(R.layout.activity_album_layout, mContainer, true);
 
         ParallaxGridView mParallaxGridView = (ParallaxGridView) v.findViewById(R.id.view);
-        mParallaxGridView.setParallaxView(getLayoutInflater().inflate(R.layout.album_view_header, mParallaxGridView, false));
-        mPhotoListAdapter = new PhotoListAdapter(this, new ArrayList<PhotoItem>());
+        mParallaxGridView.setParallaxView(v2);
+        mPhotoListAdapter = new PhotoListAdapter(PhotoParallaxActivity.this, new ArrayList<PhotoItem>());
         mParallaxGridView.setAdapter(mPhotoListAdapter);
         mParallaxGridView.setNumColumns(2);
 
@@ -147,9 +163,10 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
         return new ItemPresenter<PhotoItem>(UseCaseFactory.newGetPhotoItemUseCaseInstance());
     }
 
-    private void loadMediaList() {
+    private void loadMediaList(String id) {
         QueryParams queryParams = QueryParams.getNewInstance();
-        queryParams.setText("photo");
+        queryParams.setText("albumphotos");
+        queryParams.setData(id);
         presenter.init(queryParams);
     }
 
@@ -159,7 +176,7 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
         presenter.resume();
         supportInvalidateOptionsMenu();
 
-        loadMediaList();
+        loadMediaList(mPhotoItem.mId);
     }
 
     @Override
@@ -188,6 +205,7 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
             mPhotoListAdapter.setCollection(photoItems);
             mPhotoListAdapter.notifyDataSetChanged();
             mPhotoListAdapter.setOnItemClickListener(this);
+
         }
     }
 
@@ -230,7 +248,12 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
         /*if (presenter != null && photoItem != null) {
             presenter.onItemClicked(photoItem);
         }*/
-        Log.d("PhotoItem", photoItem.mId + " " + photoItem.mFrom + " " + photoItem.mImages + " " + photoItem.mCoverPhoto + " " + photoItem.mVideoPreviewPic);
+        Log.d(LOG_TAG, photoItem.mId + " " + photoItem.mFrom + " " + photoItem.mImages + " " + photoItem.mCoverPhoto + " " + photoItem.mVideoPreviewPic);
+
+        Intent intent = new Intent(this, SlidePagerActivity.class);
+        intent.putExtra(SlidePagerActivity.EXTRA_PICTURES, mPhotoListAdapter.getPhotosList());
+        intent.putExtra(SlidePagerActivity.EXTRA_ITEMNUM, mPhotoListAdapter.getItemNumber(photoItem));
+        startActivity(intent);
     }
 
 }

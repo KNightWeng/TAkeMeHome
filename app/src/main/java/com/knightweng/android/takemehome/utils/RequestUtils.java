@@ -16,8 +16,8 @@ public class RequestUtils extends ApiUtils {
 
     private static final int JSON_REQUEST_TIMEOUT = 10000;
 
-    public static List<PhotoItem> getPhotos(Context context) {
-        String url = ApiConstants.getPhotoUrl();
+    public static List<PhotoItem> getAlbumPhotos(Context context, String id) {
+        String url = ApiConstants.getAlbumPhotoUrl(id);
         final ResultWrapper resultWrapper = new ResultWrapper();
         makeSyncGetJsonRequest(new PhotosResponse(), context, url, JSON_REQUEST_TIMEOUT, new ApiResponseListener<PhotosResponse>() {
             @Override

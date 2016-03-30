@@ -9,9 +9,9 @@ import java.util.List;
 public class CloudStore implements ItemDataSource<PhotoItem> {
 
     @Override
-    public List<PhotoItem> getPhotos() {
+    public List<PhotoItem> getAlbumPhotos(String id) {
         List<PhotoItem> results;
-        results = RequestUtils.getPhotos(MyApplication.getMyApplicationContext());
+        results = RequestUtils.getAlbumPhotos(MyApplication.getMyApplicationContext(), id);
         return results;
     }
 

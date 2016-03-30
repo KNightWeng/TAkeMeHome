@@ -13,8 +13,8 @@ public class ItemRepository implements ContentRepository<PhotoItem> {
     ItemDataSource              mCloud  = new CloudStore();
 
     @Override
-    public List<PhotoItem> getPhotos() {
-        return mCloud.getPhotos();
+    public List<PhotoItem> getAlbumPhotos(String id) {
+        return mCloud.getAlbumPhotos(id);
     }
 
     @Override

@@ -13,4 +13,11 @@
         <item name="android:visibility">visible</item>
     </style>
 
+    <declare-styleable name="PageIndicator">
+        <attr name="indicator_spacing" format="dimension" />
+        <attr name="indicator_type" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="fraction" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

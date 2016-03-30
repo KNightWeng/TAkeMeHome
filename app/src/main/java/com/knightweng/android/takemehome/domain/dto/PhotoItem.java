@@ -20,12 +20,12 @@ public class PhotoItem implements Serializable, ParsingObject {
     public String       mCoverPhoto;
     public String       mVideoPreviewPic;
 
-    public class fromField {
+    public class fromField implements Serializable {
         public String id;
         public String name;
     }
 
-    public class Images {
+    public class Images implements Serializable {
         public int    height;
         public int    width;
         public String source;

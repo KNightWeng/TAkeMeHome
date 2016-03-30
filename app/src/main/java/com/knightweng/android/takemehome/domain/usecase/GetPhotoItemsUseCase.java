@@ -16,6 +16,8 @@ public class GetPhotoItemsUseCase extends BaseUseCase implements GetItemsUseCase
 
     private final ContentRepository mContentRepository;
 
+    private QueryParams             mQueryParams;
+
     private String                  mQuery;
 
     public GetPhotoItemsUseCase(ContentRepository contentRepository, ThreadExecutor executor) {
@@ -26,7 +28,7 @@ public class GetPhotoItemsUseCase extends BaseUseCase implements GetItemsUseCase
     @Override
     public void getItem(QueryParams queryParams, PostExecutionThread postExecutionThread, Callback callback,
             boolean async, boolean applyUserState) {
-        mQuery = queryParams.getTEXT();
+        mQueryParams = queryParams;
         mCallback = callback;
         mPostExecutionThread = postExecutionThread;
         mAsync = async;
@@ -37,15 +39,15 @@ public class GetPhotoItemsUseCase extends BaseUseCase implements GetItemsUseCase
     @Override
     public void run() {
         try {
-            if (mQuery.equals("photo")) {
+            if (mQueryParams.getTEXT().equals("albumphotos")) {
                 @SuppressWarnings("unchecked")
-                List<PhotoItem> result = mContentRepository.getPhotos();
+                List<PhotoItem> result = mContentRepository.getAlbumPhotos(mQueryParams.getData());
                 notifyOnSuccess(result);
-            } else if (mQuery.equals("album")) {
+            } else if (mQueryParams.getTEXT().equals("album")) {
                 @SuppressWarnings("unchecked")
                 List<PhotoItem> result = mContentRepository.getAlbums();
                 notifyOnSuccess(result);
-            } else if (mQuery.equals("video")) {
+            } else if (mQueryParams.getTEXT().equals("video")) {
                 @SuppressWarnings("unchecked")
                 List<PhotoItem> result = mContentRepository.getVideos();
                 notifyOnSuccess(result);

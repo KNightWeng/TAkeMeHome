@@ -30,6 +30,8 @@ public class PhotoListAdapter extends BaseAdapter {
 
     private List<PhotoItem>      mPhotos;
 
+    private List<String>         mPhotosUrl;
+
     private OnItemClickListener  mOnItemClickListener;
 
     public interface OnItemClickListener {
@@ -41,6 +43,7 @@ public class PhotoListAdapter extends BaseAdapter {
         validateCollection(collection);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPhotos = new ArrayList<>(collection);
+        mPhotosUrl = new ArrayList<String>();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -56,6 +59,10 @@ public class PhotoListAdapter extends BaseAdapter {
     public void setCollection(Collection<PhotoItem> photoItems) {
         validateUsersCollection(photoItems);
         mPhotos = new ArrayList<>(photoItems);
+        mPhotos.remove(0);
+        mPhotosUrl = new ArrayList<String>();
+        for(int i = 0; i < mPhotos.size(); i++)
+            mPhotosUrl.add(ApiConstants.getAlbumCoverPhotoUrl((mPhotos.get(i)).mId));
         notifyDataSetChanged();
     }
 
@@ -63,6 +70,18 @@ public class PhotoListAdapter extends BaseAdapter {
         if (photoItems == null) {
             throw new IllegalArgumentException("The list cannot be null");
         }
+    }
+
+    public int getItemNumber(PhotoItem item) {
+        for(int i = 0; i < mPhotos.size(); i++) {
+            if(mPhotos.get(i).mId == item.mId) return i;
+        }
+
+        return 0;
+    }
+
+    public String[] getPhotosList() {
+        return mPhotosUrl.toArray(new String[mPhotosUrl.size()]);
     }
 
     @Override

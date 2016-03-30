@@ -1,5 +1,6 @@
 package com.knightweng.android.takemehome.presentation.fragment;
 
+import java.io.Serializable;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.widget.RelativeLayout;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.knightweng.android.takemehome.R;
+import com.knightweng.android.takemehome.common.ApiConstants;
 import com.knightweng.android.takemehome.common.QueryParams;
 import com.knightweng.android.takemehome.domain.dto.PhotoItem;
 import com.knightweng.android.takemehome.domain.usecase.UseCaseFactory;
@@ -244,10 +247,10 @@ public class AlbumListFragment extends PresenterFragment<ItemPresenter<PhotoItem
         /*if (presenter != null && photoItem != null) {
             presenter.onItemClicked(photoItem);
         }*/
-        Log.d("PhotoItem", photoItem.mCoverPhoto);
+        Log.d("PhotoItem", photoItem.mId);
 
         Intent intent = new Intent();
-        intent.putExtra("PhotoItem", photoItem.mCoverPhoto);
+        intent.putExtra("PhotoItem", (Serializable) photoItem);
         intent.setClass(getActivity(), PhotoParallaxActivity.class);
         startActivity(intent);
     }

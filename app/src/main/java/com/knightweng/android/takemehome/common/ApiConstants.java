@@ -21,14 +21,19 @@ public class ApiConstants {
         String AFTER         = "after";
     }
 
-    public static String getPhotoUrl() {
+    /*public static String getAlbumPhotoUrl() {
         return getPhotoUrl(5);
+    }*/
+
+    public static String getAlbumPhotoUrl(String id) {
+        AccessToken.getCurrentAccessToken().getToken();
+        return "https://graph.facebook.com/v2.3/" + id + "/photos?fields=id,from,images&limit=50&access_token="
+                + AccessToken.getCurrentAccessToken().getToken();
     }
 
-    private static String getPhotoUrl(int pageSize) {
+    public static String getNextPageAlbumPhotoUrl(String hashCode) {
         AccessToken.getCurrentAccessToken().getToken();
-        return "https://graph.facebook.com/v2.3/1521786444750433/photos?fields=id,from,images&limit=" + pageSize + "&access_token="
-                + AccessToken.getCurrentAccessToken().getToken();
+        return "https://graph.facebook.com/v2.3/1521786444750433/albums?fields=id,cover_photo&limit=50&after=" + hashCode + "&access_token=" + AccessToken.getCurrentAccessToken().getToken();
     }
 
     public static String getAlbumUrl() { return getAlbumUrl(50); }

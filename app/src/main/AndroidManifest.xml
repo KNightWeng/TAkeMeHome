@@ -28,6 +28,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity android:name=".presentation.activity.PhotoParallaxActivity"></activity>
+        <activity android:name=".presentation.slidepager.SlidePagerActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
