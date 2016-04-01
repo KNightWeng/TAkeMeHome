@@ -34,6 +34,19 @@ public class HomeActivity extends BaseActivity implements FacebookCallback<Login
 
     List<String>                mPermissionPublishNeeds = Arrays.asList("manage_pages");
 
+    private void createShortCut() {
+        Intent shortcut = new Intent(getApplicationContext(), HomeActivity.class);
+        shortcut.setAction(Intent.ACTION_MAIN);
+
+        Intent intent = new Intent();
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.app_name));
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                        R.mipmap.ic_launcher));
+        intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        getApplicationContext().sendBroadcast(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +64,7 @@ public class HomeActivity extends BaseActivity implements FacebookCallback<Login
                 onAccessTokenChanged(oldAccessToken, newAccessToken);
             }
         };
+        createShortCut();
     }
 
     @Override

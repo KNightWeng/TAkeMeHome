@@ -6,4 +6,5 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent_accent">#55198AFB</color>
+    <drawable name="actionbar_color">#FB8521</drawable>
 </resources>

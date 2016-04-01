@@ -3,6 +3,10 @@ package com.knightweng.android.takemehome.presentation.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
@@ -39,9 +43,11 @@ import com.knightweng.android.takemehome.presentation.view.BaseView;
 import com.knightweng.android.takemehome.presentation.view.CollectionView;
 import com.knightweng.android.takemehome.utils.LogUtils;
 import com.knightweng.android.takemehome.utils.VolleyLib;
+import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 import com.poliveira.apps.parallaxlistview.ParallaxGridView;
 import com.poliveira.apps.parallaxlistview.ParallaxScrollEvent;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,6 +85,41 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
 
     private PhotoItem                      mPhotoItem;
 
+    public class CircleTransform implements Transformation {
+        @Override
+        public Bitmap transform(Bitmap source) {
+            int size = Math.min(source.getWidth(), source.getHeight());
+
+            int x = (source.getWidth() - size) / 2;
+            int y = (source.getHeight() - size) / 2;
+
+            Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+            if (squaredBitmap != source) {
+                source.recycle();
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+            Canvas canvas = new Canvas(bitmap);
+            Paint paint = new Paint();
+            BitmapShader shader = new BitmapShader(squaredBitmap,
+                    BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+            paint.setShader(shader);
+            paint.setAntiAlias(true);
+
+            float r = size / 2f;
+            canvas.drawCircle(r, r, r, paint);
+
+            squaredBitmap.recycle();
+            return bitmap;
+        }
+
+        @Override
+        public String key() {
+            return "circle";
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         LogUtils.debugLog(LOG_TAG, " onCreate()");
@@ -87,6 +128,8 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
         mPhotoItem = (PhotoItem) intent.getSerializableExtra("PhotoItem");
 
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setTitle(mPhotoItem.mId);
         //try {
         //    mListener = (InteractionListener) this;
         //} catch (ClassCastException e) {
@@ -99,10 +142,19 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
 
         mContainer.removeAllViews();
 
+        /*MyFadingActionBarHelper helper = new MyFadingActionBarHelper()
+                .actionBarBackground(R.drawable.actionbar_color)
+                .headerLayout(R.layout.album_view_header)
+                .contentLayout(R.layout.activity_album_layout)
+                .lightActionBar(true);
+        setContentView(helper.createView(this));
+        helper.initActionBar(this);*/
+
         final View v2 = getLayoutInflater().inflate(R.layout.album_view_header, mParallaxGridView, true);
-        ImageView mImageView = (ImageView) v2.findViewById(R.id.album_view_header_imageview);
+        final ImageView mImageView = (ImageView) v2.findViewById(R.id.album_view_header_imageview);
         Picasso.with(getContext())
                 .load(ApiConstants.getAlbumCoverPhotoUrl(mPhotoItem.mCoverPhoto))
+                .transform(new CircleTransform())
                 .into(mImageView, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
@@ -118,12 +170,17 @@ public class PhotoParallaxActivity extends PresenterActivity<ItemPresenter<Photo
                 });
 
         final View v = getLayoutInflater().inflate(R.layout.activity_album_layout, mContainer, true);
-
         ParallaxGridView mParallaxGridView = (ParallaxGridView) v.findViewById(R.id.view);
-        mParallaxGridView.setParallaxView(v2);
         mPhotoListAdapter = new PhotoListAdapter(PhotoParallaxActivity.this, new ArrayList<PhotoItem>());
+        mParallaxGridView.setParallaxView(v2);
         mParallaxGridView.setAdapter(mPhotoListAdapter);
         mParallaxGridView.setNumColumns(2);
+        /*StaggeredGridView mStaggeredGridView = (StaggeredGridView) findViewById(R.id.grid_view);
+        mPhotoListAdapter = new PhotoListAdapter(PhotoParallaxActivity.this, new ArrayList<PhotoItem>());
+        mStaggeredGridView.setAdapter(mPhotoListAdapter);*/
+
+
+        //final View v = getLayoutInflater().inflate(R.layout.activity_album_layout, mContainer, true);
 
         //NetworkImageView mNetworkImageView = (NetworkImageView) findViewById(R.id.album_view_header_networkimageview);
         //Picasso.with(getContext()).load(ApiConstants.getCoverPhotoUrl(mCoverPhoto)).into(mNetworkImageView);

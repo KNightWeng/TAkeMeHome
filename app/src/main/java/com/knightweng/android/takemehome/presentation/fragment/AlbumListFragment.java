@@ -1,7 +1,6 @@
 package com.knightweng.android.takemehome.presentation.fragment;
 
 import java.io.Serializable;
-import java.security.spec.AlgorithmParameterSpec;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -9,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,17 +15,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.knightweng.android.takemehome.R;
-import com.knightweng.android.takemehome.common.ApiConstants;
 import com.knightweng.android.takemehome.common.QueryParams;
 import com.knightweng.android.takemehome.domain.dto.PhotoItem;
 import com.knightweng.android.takemehome.domain.usecase.UseCaseFactory;
-import com.knightweng.android.takemehome.presentation.activity.HomeActivity;
 import com.knightweng.android.takemehome.presentation.activity.PhotoParallaxActivity;
 import com.knightweng.android.takemehome.presentation.adapter.AlbumListAdapter;
 import com.knightweng.android.takemehome.presentation.presenter.ItemPresenter;
@@ -153,7 +147,7 @@ public class AlbumListFragment extends PresenterFragment<ItemPresenter<PhotoItem
     public void onResume() {
         super.onResume();
         presenter.resume();
-        mActivity.supportInvalidateOptionsMenu();
+        //mActivity.supportInvalidateOptionsMenu();
     }
 
     @Override
